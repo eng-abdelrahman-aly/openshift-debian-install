@@ -9,30 +9,51 @@ When running `crc start`, the process fails with:
 ## The Solution
 The issue is caused by the Libvirt security driver (AppArmor) on Debian. Follow these steps to fix it:
 
-### 1. **Kill hung processes:**
-   ```bash
-   ps aux | grep -E '[c]rc daemon|[c]rcd'
-   # kill the process ID found
-### 2. Change the security driver
+Step 1: Clean up hung processes
 
-Search for the security_driver line. It might be commented out with a #. Remove the # and change it to:
-Code snippet
+Before applying the fix, ensure no background CRC daemons are stuck:
+Bash
 
-security_driver = "none"
+# Check for the process
+ps aux | grep -E '[c]rc daemon|[c]rcd'
 
-### 3. Restart Libvirt
+# Kill the process (replace <PID> with the number found above)
+kill <PID>
 
-Apply the changes by restarting the service:
+Step 2: Disable Libvirt Security Driver
+
+You must tell Libvirt not to use a security driver for QEMU.
+
+    Open the configuration file:
+    Bash
+
+    sudo vim /etc/libvirt/qemu.conf
+
+    Find the security_driver setting. It is usually commented out like this: #security_driver = "selinux".
+
+    Change it to:
+    security_driver = "none"
+
+    Save and exit (in Vim, type :wq and press Enter).
+
+Step 3: Restart Services
+
+Apply the new configuration by restarting the libvirt daemon:
 Bash
 
 sudo systemctl restart libvirtd
 
-### 4. Start CRC
+Step 4: Verify and Start
 
-Now you can start the cluster:
+Verify that the qcow2 file is accessible and start CRC:
 Bash
 
+# Verify file existence
+ls -l /home/abdo/.crc/cache/crc_libvirt_4.21.4_amd64/crc.qcow2
+
+# Start CRC
 crc start
 
+Finalized detailed troubleshooting guide
 
  
