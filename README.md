@@ -61,7 +61,7 @@ Finalized detailed troubleshooting guide
 # Red Hat CRC: The "Persistent Socket" Fix for Debian
 
 This guide resolves the common "Address already in use" loop where the CRC daemon keeps respawning even after being killed.
-🔍 What is VSOCK?
+# What is VSOCK?
 
 VSOCK (Virtual Socket) is a specialized network family (AF_VSOCK) used for communication between a Hypervisor (Host) and Virtual Machines.
 
@@ -71,7 +71,7 @@ Unlike standard TCP/IP which uses IP addresses (like 127.0.0.1), VSOCK uses a CI
 
     The Problem: If a CRC process crashes or is managed by systemd, the kernel locks port 1024. Because it’s a hardware-level communication channel, standard networking tools often can't "see" why the port is busy.
 
-🛠 Complete Reset Procedure
+# Complete Reset Procedure
 1. Clear Global (Root) Conflicts
 
 If sudo crc was ever run, a system-wide socket might be "squatting" on the VSOCK port. We must disable these first.
@@ -130,7 +130,7 @@ crc setup
 # 3. Start the cluster
 crc start
 
-📝 Summary of Key Commands
+# Summary of Key Commands
 Command	Why it's needed
 daemon-reexec	Restarts the systemd manager to clear "ghost" jobs from memory.
 fuser -k 1024/vsock	Forcefully releases the VSOCK communication channel.
