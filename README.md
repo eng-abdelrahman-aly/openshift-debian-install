@@ -58,7 +58,7 @@ Finalized detailed troubleshooting guide
 
 
 
-🚀 Red Hat CRC: The "Persistent Socket" Fix for Debian
+# Red Hat CRC: The "Persistent Socket" Fix for Debian
 
 This guide resolves the common "Address already in use" loop where the CRC daemon keeps respawning even after being killed.
 🔍 What is VSOCK?
