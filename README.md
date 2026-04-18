@@ -78,9 +78,9 @@ If sudo crc was ever run, a system-wide socket might be "squatting" on the VSOCK
 Bash
 
 # Stop any system-wide services
-sudo systemctl stop crc-vsock.socket 2>/dev/null
-sudo systemctl stop crc-http.socket 2>/dev/null
-sudo systemctl stop crc-daemon.service 2>/dev/null
+  sudo systemctl stop crc-vsock.socket 2>/dev/null
+  sudo systemctl stop crc-http.socket 2>/dev/null
+  sudo systemctl stop crc-daemon.service 2>/dev/null
 
 # Disable them so they don't auto-start on boot
 sudo systemctl disable crc-vsock.socket crc-http.socket 2>/dev/null
